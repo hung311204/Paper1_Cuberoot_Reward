@@ -71,9 +71,9 @@ Then you can take the checkpoint file and run test_PPO.py for testing phase, I'v
 ```bash
 python   | Abs path to the test_PPO.py on your machine |   --checkpoint-path | Abs path of your checkpoint file |   --num-runner-episodes 100 --runner-output-dir "./namethatyouwant" --seed 123 --eval-env-id "bus14_val" --env-id "bus14_train" --action-type "topology" --difficulty 1 --cuda True --env-config-path "scenario.json" --norm-obs True  --use-heuristic True --th-deterministic True --n-threads 4 --deterministic-action False --alg PPO --norm-reward False --heuristic-type idle
 ```
+Note that the result can vary between different seed, even with the same running seed, different combination of split data (train/val/test) can result to different visualization. Sometimes when I run (with train/val/test data on my local machine) the reward LineCubeRootRewardNonRegularized and LineCubeRootReward can have different performance...
 
-
-Note: I need to refactor this file...
+Note: I need to refactor this file, too slow...
 
 
 📝 Notes
