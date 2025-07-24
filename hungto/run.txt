@@ -1,0 +1,38 @@
+
+
+WORK 
+
+
+
+
+        
+        Install:
+
+            conda env create -f conda_env.yml
+            conda activate hungto-reward
+            pip install -e .   
+
+            pip install grid2op==1.10.2
+            pip install lightsim2grid
+            pip install pandapower==2.14.11
+
+        run the cell in the notebook to split train/val/test data: hungto\ExternalLibs\RL2Grid_v0\RL2Grid\tutorials\split_data.ipynb   
+
+        #go to hungto\ExternalLibs\RL2Grid_v0\RL2Grid\env\utils.py, to the make_env() method, modify in generate_class=True, experimental_read_from_local_dir=False, and run this:
+
+        python   hungto\ExternalLibs\RL2Grid_v0\RL2Grid\main.py  --alg PPO  --total-timesteps 600000  --exp-tag YOURAGENTNAME   --eval-freq 20000  --n-eval-episodes 100 --eval-env-id bus14_val   --reward_fn    LineCubeRootRewardNonRegularized    --reward_factors 1.0      --reward_param_lsmrm_n_safe 3  --reward_param_lsmrm_n_overflow 3   --use-heuristic True  --heuristic_type idle   --action-type topology   --additional-timesteps 100000   --n-minibatches 4  --n-envs 5  --n-steps 400  --n-threads 5   --deterministic-action False      --gamma 0.9 --env-id bus14_train  --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs False --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 1 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40   --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+
+        #it will annouce gen successfully, then modify back generate_class=False, experimental_read_from_local_dir=True, and run again:
+
+        python   hungto\ExternalLibs\RL2Grid_v0\RL2Grid\main.py  --alg PPO  --total-timesteps 600000  --exp-tag YOURAGENTNAME   --eval-freq 20000  --n-eval-episodes 100 --eval-env-id bus14_val   --reward_fn    LineCubeRootRewardNonRegularized    --reward_factors 1.0      --reward_param_lsmrm_n_safe 3  --reward_param_lsmrm_n_overflow 3   --use-heuristic True  --heuristic_type idle   --action-type topology   --additional-timesteps 100000   --n-minibatches 4  --n-envs 5  --n-steps 400  --n-threads 5   --deterministic-action False      --gamma 0.9 --env-id bus14_train  --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs False --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 1 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40   --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+
+
+
+
+
+
+
+
+
+
+    
