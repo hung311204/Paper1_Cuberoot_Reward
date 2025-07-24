@@ -1,4 +1,4 @@
-# RL2Grid Reward Function Paper - Code Setup Guide
+# Reward Function Paper
 
 This repository contains the code used in my research paper on **reward function design for power grid control**.
 The implementation builds upon the  [RL2Grid](https://openreview.net/forum?id=7J2C4QnQrl) framework (OpenReview version).
