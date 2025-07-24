@@ -9,7 +9,7 @@ Follow the steps below to reproduce the result of my paper.
 
 ## 🛠️ 1. Installation
 
-First, install Miniconda, cd to this folder, run these to create and activate the conda environment, then install hungto lib in editable mode:
+First, install Miniconda, cd to this folder, run these to create, activate the conda environment, and install hungto lib (my lib) in editable mode:
 
 ```bash
 conda env create -f conda_env.yml
@@ -27,11 +27,46 @@ pip install pandapower==2.14.11
 
 ## 🗂️ 2. Data Preparation
 
-Run the notebook to split the training, validation, and testing datasets:
+Run the notebook (only once) to split the training, validation, and testing datasets if you have not:
 
 hungto/ExternalLibs/RL2Grid_v0/RL2Grid/tutorials/split_data.ipynb
 
-## ⚙️ 3. Environment Generation
+## ⚙️ 3. Classard Function Paper
+
+This repository contains the code used in my research paper on **reward function design for power grid control**.
+The implementation builds upon the  [RL2Grid](https://openreview.net/forum?id=7J2C4QnQrl) framework (OpenReview version).
+
+Follow the steps below to reproduce the result of my paper.
+
+---
+
+## 🛠️ 1. Installation
+
+First, install Miniconda, cd to this folder, run these to create, activate the conda environment, and install hungto lib (my lib) in editable mode:
+
+```bash
+conda env create -f conda_env.yml
+conda activate hungto-reward
+pip install -e .
+```
+
+Then, install the required power grid simulation packages:
+
+```bash
+pip install grid2op==1.10.2
+pip install lightsim2grid
+pip install pandapower==2.14.11
+```
+
+## 🗂️ 2. Data Preparation
+
+Run the notebook (only once) to split the training, validation, and testing datasets if you have not:
+
+hungto/ExternalLibs/RL2Grid_v0/RL2Grid/tutorials/split_data.ipynb
+
+## ⚙️ 3. Class Generation
+
+This is for dealing with this kind of bug [https://grid2op.readthedocs.io/en/latest/troubleshoot.html]
 
 Before running training, modify the following file:
 
@@ -47,7 +82,7 @@ Then run the following command to generate the environment:
 python hungto/ExternalLibs/RL2Grid_v0/RL2Grid/main.py --alg PPO --total-timesteps 600000 --exp-tag YOURAGENTNAME --eval-freq 20000 --n-eval-episodes 100 --eval-env-id bus14_val --reward_fn LineCubeRootRewardNonRegularized --reward_factors 1.0 --reward_param_lsmrm_n_safe 3 --reward_param_lsmrm_n_overflow 3 --use-heuristic True --heuristic_type idle --action-type topology --additional-timesteps 100000 --n-minibatches 4 --n-envs 5 --n-steps 400 --n-threads 5 --deterministic-action False --gamma 0.9 --env-id bus14_train --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003 --difficulty 1 --gae-lambda 0.95 --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10 --update-epochs 40 --env-config-path scenario.json --th-deterministic True --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True
 ```
 
-You will see a message confirming successful environment generation.
+You will see a message confirming successful offline class generation.
 
 ## 🔁 4. Restore Environment Flags and Train
 
@@ -71,7 +106,7 @@ Then you can take the checkpoint file and run test_PPO.py for testing phase, I'v
 ```bash
 python   | Abs path to the test_PPO.py on your machine |   --checkpoint-path | Abs path of your checkpoint file |   --num-runner-episodes 100 --runner-output-dir "./namethatyouwant" --seed 123 --eval-env-id "bus14_val" --env-id "bus14_train" --action-type "topology" --difficulty 1 --cuda True --env-config-path "scenario.json" --norm-obs True  --use-heuristic True --th-deterministic True --n-threads 4 --deterministic-action False --alg PPO --norm-reward False --heuristic-type idle
 ```
-Note that the result can vary between different seed, even with the same running seed, different combination of split data (train/val/test) can result to different visualization. Sometimes when I run (with train/val/test data on my local machine) the reward LineCubeRootRewardNonRegularized, LineCubeRootReward, L2RPNReward, and L2RPNRewardRegularized can have different performance (but L2RPNReward types are still worse)...
+Note that the result can vary between different seed, even with the same running seed, different combination of split data (train/val/test) can result to different visualization. Sometimes when I run (with train/val/test data on my local machine) the reward LineCubeRootRewardNonRegularized, LineCubeRootReward, L2RPNReward, and L2RPNRewardRegularized can have different performance (but CubeRoot types are still better)...
 
 Note: I need to refactor this file, too slow...
 
